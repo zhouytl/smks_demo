@@ -45,34 +45,25 @@ conda activate smks
 From this directory, run:
 
 ```bash
-python Main_preprocess.py
-```
-
-By default, `Main_preprocess.py` currently processes only this event:
-
-```python
-evtdir_list = glob('./data/20130514_0032')
-```
-
-To process all event folders, change that line to:
-
-```python
-evtdir_list = glob('./data/20*')
+python3 Main_preprocess.py
 ```
 
 The first section measures residuals and writes `df_measured.csv` plus figures
-inside each event folder. The script then stops at `exit()`. To run the
-post-processing section, comment out or remove that `exit()` line and run the
-script again. The post-processing section performs auto-selection, trace
-clustering, group summarization, and writes updated CSV outputs under `data/`.
+inside each event folder. The post-processing section performs auto-selection, trace clustering, group summarization, and writes updated CSV outputs under `data/`.
 
 ## Typical Workflow
 
 1. Put each event in its own `data/YYYYMMDD_HHMM/` folder.
 2. Make sure the event folder contains `hypo.csv`, `df_stations_merge6.csv`,
-   and the required `np_waveforms_*.npy` files.
+   and the required `np_waveforms_?.npy` files. The column `tridx` in 	`df_stations_merge6.csv` is consistent with the order in `np_waveforms_?.py`.
+   From 0 to 5 are: 
+   - observed
+   - simulated on PREM 
+   - simulated on PREM + MANTLE(SP12RTS) 
+   - simulated on PREM + MANTLE(SP12RTS) + CORE(Torus)
+   - simulated on PREM + MANTLE(SP12RTS) + CORE(Global)
+   - simulated on PREM + MANTLE(SP12RTS) + CORE(subLLSVP) 
 3. Activate the environment with `conda activate smks`.
-4. Edit `evtdir_list` in `Main_preprocess.py` to choose which events to run.
-5. Run `python Main_preprocess.py`.
-6. Check generated CSV files and plots in each event folder.
+4. Run `python Main_preprocess.py`.
+5. Check the generated CSV files and plots in each event folder.
 
