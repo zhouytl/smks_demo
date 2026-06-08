@@ -1,0 +1,4 @@
+*Figures
+*.pdf
+*np_waveforms_merge6.npy
+*merge6*.npy
