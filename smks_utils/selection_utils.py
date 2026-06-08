@@ -233,7 +233,7 @@ def sum_groups_merge3(dfname, fdata, fhypo, figdir, fgrp):
             # s4ks_select = 0.0
             # t42_3 = np.mean(df_select.t42_fw2)
             # std_t42_3 = np.std(df_select.t32_fw2)
-            if std_gcarc > 0.1 and std_t32_3 < 5.0:
+            if std_gcarc > 0.1:
                 df_row = pd.DataFrame(data=[[grpid, ntr,
                                              evla, evlo, evdp, stla, stlo,
                                              gcarc, std_gcarc,
@@ -388,7 +388,9 @@ def sum_groups_merge6(evtid, fname):
         if grpid >=0 :
             df_select = df[df.group == grpid]
             std_gcarc = float(np.std(df_select.gcarc))
-            if std_gcarc <= 0.1:
+            std_residual2 = np.std(df_select.t32_fw2)
+            if std_gcarc <= 0.1 or std_residual2 > 2.0:
+                print(std_gcarc, std_residual2)
                 df.loc[df["group"] == grpid, "group"] = -1
                 continue
             ntr = len(df_select)
